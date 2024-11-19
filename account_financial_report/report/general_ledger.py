@@ -3,6 +3,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import models, fields, api, _
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class GeneralLedgerReport(models.TransientModel):
@@ -354,6 +357,7 @@ class GeneralLedgerReportCompute(models.TransientModel):
             sub_subquery_sum_amounts += """
         AND m.closing_type in ('other', 'none', 'opening')
             """
+
         if self.filter_cost_center_ids:
             sub_subquery_sum_amounts += """
         INNER JOIN
@@ -726,6 +730,9 @@ AND
             GROUP BY
                 ap.account_id, ap.partner_id, c.id
         """
+
+        _logger.info(sub_subquery_sum_amounts)
+
         return sub_subquery_sum_amounts
 
     def _get_final_partner_sub_subquery_sum_amounts(self, only_empty_partner,
