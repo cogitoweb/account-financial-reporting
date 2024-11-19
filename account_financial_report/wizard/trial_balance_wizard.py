@@ -57,6 +57,10 @@ class TrialBalanceReportWizard(models.TransientModel):
         comodel_name='account.account',
         string='Filter accounts',
     )
+    hide_opening_closing = fields.Boolean(
+        string='Hide end of year closing moves',
+        default=True
+    )
     hide_account_at_0 = fields.Boolean(
         string='Hide accounts at 0', default=True,
         help='When this option is enabled, the trial balance will '
@@ -221,6 +225,7 @@ class TrialBalanceReportWizard(models.TransientModel):
             'date_from': self.date_from,
             'date_to': self.date_to,
             'only_posted_moves': self.target_move == 'posted',
+            'hide_opening_closing': self.hide_opening_closing,
             'hide_account_at_0': self.hide_account_at_0,
             'foreign_currency': self.foreign_currency,
             'company_id': self.company_id.id,

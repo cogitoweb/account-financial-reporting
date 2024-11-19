@@ -29,6 +29,7 @@ class GeneralLedgerReport(models.TransientModel):
     date_to = fields.Date()
     fy_start_date = fields.Date()
     only_posted_moves = fields.Boolean()
+    hide_opening_closing = fields.Boolean()
     hide_account_at_0 = fields.Boolean()
     foreign_currency = fields.Boolean()
     show_analytic_tags = fields.Boolean()
@@ -341,10 +342,17 @@ class GeneralLedgerReportCompute(models.TransientModel):
                 ml.journal_id IN (%s)
             """ % ', '.join(map(str, self.filter_journal_ids.ids))
 
+        sub_subquery_sum_amounts += """
+        INNER JOIN
+            account_move m ON ml.move_id = m.id """
+
         if self.only_posted_moves:
             sub_subquery_sum_amounts += """
-        INNER JOIN
-            account_move m ON ml.move_id = m.id AND m.state = 'posted'
+        AND m.state = 'posted'
+            """
+        if self.hide_opening_closing:
+            sub_subquery_sum_amounts += """
+        AND m.closing_type in ('other', 'none', 'opening')
             """
         if self.filter_cost_center_ids:
             sub_subquery_sum_amounts += """
@@ -689,10 +697,17 @@ AND
             sub_subquery_sum_amounts += """
                     AND ap.include_initial_balance = TRUE
             """
+        sub_subquery_sum_amounts += """
+            INNER JOIN
+                account_move m ON ml.move_id = m.id """
+
         if self.only_posted_moves:
             sub_subquery_sum_amounts += """
-            INNER JOIN
-                account_move m ON ml.move_id = m.id AND m.state = 'posted'
+            AND m.state = 'posted'
+            """
+        if self.hide_opening_closing:
+            sub_subquery_sum_amounts += """
+        AND m.closing_type in ('other', 'none', 'opening')
             """
         if self.filter_cost_center_ids:
             sub_subquery_sum_amounts += """
@@ -1279,6 +1294,10 @@ AND
 AND
     m.state = 'posted'
         """
+        if self.hide_opening_closing:
+            query_inject_move_line += """
+        AND m.closing_type in ('other', 'none', 'opening')
+            """
         if only_empty_partner_line:
             query_inject_move_line += """
 AND
@@ -1422,6 +1441,10 @@ WITH
             query_inject_move_line_centralized += """
             AND
                 m.state = 'posted'
+            """
+        if self.hide_opening_closing:
+            query_inject_move_line_centralized += """
+        AND m.closing_type in ('other', 'none', 'opening')
             """
         query_inject_move_line_centralized += """
             GROUP BY
@@ -1663,6 +1686,10 @@ WITH move_lines_on_tags AS
             query_select_previous_fy_unaffected_earnings += """
                 AND am.state = 'posted'
             """
+        if self.hide_opening_closing:
+            query_select_previous_fy_unaffected_earnings += """
+                AND am.closing_type in ('other', 'none', 'opening')
+                    """
         self.env.cr.execute(
             query_select_previous_fy_unaffected_earnings,
             query_select_previous_fy_unaffected_earnings_params)
