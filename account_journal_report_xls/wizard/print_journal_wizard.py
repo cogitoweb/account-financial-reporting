@@ -20,9 +20,9 @@
 #
 ##############################################################################
 
-from openerp.tools.translate import _
-from openerp.osv import orm, fields
-from openerp.addons.account.wizard.account_report_common_journal \
+from odoo.tools.translate import _
+from odoo.osv import orm, fields
+from odoo.addons.account.wizard.account_report_common_journal \
     import account_common_journal_report
 import logging
 _logger = logging.getLogger(__name__)

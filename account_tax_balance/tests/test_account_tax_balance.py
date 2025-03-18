@@ -3,8 +3,8 @@
 # © 2016 Giovanni Capalbo <giovanni@therp.nl>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.fields import Date
-from openerp.tests.common import TransactionCase
+from odoo.fields import Date
+from odoo.tests.common import TransactionCase
 from datetime import datetime
 from dateutil.rrule import MONTHLY
 

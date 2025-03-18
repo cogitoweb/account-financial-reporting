@@ -21,8 +21,8 @@
 ##############################################################################
 
 import time
-from openerp.report import report_sxw
-from openerp.tools.translate import translate
+from odoo.report import report_sxw
+from odoo.tools.translate import translate
 import logging
 _logger = logging.getLogger(__name__)
 

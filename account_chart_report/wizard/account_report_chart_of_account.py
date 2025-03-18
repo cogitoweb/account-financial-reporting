@@ -20,7 +20,7 @@
 #
 ##############################################################################
 
-from openerp import fields, models, api
+from odoo import fields, models, api
 
 
 class ChartOfAccountsReport(models.TransientModel):

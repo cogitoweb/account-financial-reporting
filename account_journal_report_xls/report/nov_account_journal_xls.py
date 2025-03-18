@@ -22,11 +22,11 @@
 
 import xlwt
 from datetime import datetime
-from openerp.osv import orm
-from openerp.addons.report_xls.report_xls import report_xls
-from openerp.addons.report_xls.utils import rowcol_to_cell, _render
+from odoo.osv import orm
+from odoo.addons.report_xls.report_xls import report_xls
+from odoo.addons.report_xls.utils import rowcol_to_cell, _render
 from .nov_account_journal import nov_journal_print
-from openerp.tools.translate import _
+from odoo.tools.translate import _
 import logging
 _logger = logging.getLogger(__name__)
 
