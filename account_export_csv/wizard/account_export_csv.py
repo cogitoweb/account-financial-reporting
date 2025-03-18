@@ -23,7 +23,7 @@
 
 import itertools
 import tempfile
-from cStringIO import StringIO
+from io import StringIO
 import base64
 
 import csv
@@ -50,10 +50,10 @@ class AccountUnicodeWriter(object):
 
     def writerow(self, row):
         # we ensure that we do not try to encode none or bool
-        row = (x or u'' for x in row)
+        row = (x or '' for x in row)
 
         encoded_row = [
-            c.encode("utf-8") if isinstance(c, unicode) else c for c in row]
+            c.encode("utf-8") if isinstance(c, str) else c for c in row]
 
         self.writer.writerow(encoded_row)
         # Fetch UTF-8 output from the queue ...
@@ -135,11 +135,11 @@ class AccountCSVExport(orm.TransientModel):
         }
 
     def _get_header_account(self, cr, uid, ids, context=None):
-        return [_(u'CODE'),
-                _(u'NAME'),
-                _(u'DEBIT'),
-                _(u'CREDIT'),
-                _(u'BALANCE'),
+        return [_('CODE'),
+                _('NAME'),
+                _('DEBIT'),
+                _('CREDIT'),
+                _('BALANCE'),
                 ]
 
     def _get_rows_account(self, cr, uid, ids,
@@ -195,13 +195,13 @@ class AccountCSVExport(orm.TransientModel):
         }
 
     def _get_header_analytic(self, cr, uid, ids, context=None):
-        return [_(u'ANALYTIC CODE'),
-                _(u'ANALYTIC NAME'),
-                _(u'CODE'),
-                _(u'ACCOUNT NAME'),
-                _(u'DEBIT'),
-                _(u'CREDIT'),
-                _(u'BALANCE'),
+        return [_('ANALYTIC CODE'),
+                _('ANALYTIC NAME'),
+                _('CODE'),
+                _('ACCOUNT NAME'),
+                _('DEBIT'),
+                _('CREDIT'),
+                _('BALANCE'),
                 ]
 
     def _get_rows_analytic(self, cr, uid, ids,
@@ -282,32 +282,32 @@ class AccountCSVExport(orm.TransientModel):
     def _get_header_journal_entries(self, cr, uid, ids, context=None):
         return [
             # Standard Sage export fields
-            _(u'DATE'),
-            _(u'JOURNAL CODE'),
-            _(u'ACCOUNT CODE'),
-            _(u'PARTNER NAME'),
-            _(u'REF'),
-            _(u'DESCRIPTION'),
-            _(u'DEBIT'),
-            _(u'CREDIT'),
-            _(u'FULL RECONCILE'),
-            _(u'PARTIAL RECONCILE'),
-            _(u'ANALYTIC ACCOUNT CODE'),
+            _('DATE'),
+            _('JOURNAL CODE'),
+            _('ACCOUNT CODE'),
+            _('PARTNER NAME'),
+            _('REF'),
+            _('DESCRIPTION'),
+            _('DEBIT'),
+            _('CREDIT'),
+            _('FULL RECONCILE'),
+            _('PARTIAL RECONCILE'),
+            _('ANALYTIC ACCOUNT CODE'),
 
             # Other fields
-            _(u'ENTRY NUMBER'),
-            _(u'ACCOUNT NAME'),
-            _(u'BALANCE'),
-            _(u'AMOUNT CURRENCY'),
-            _(u'CURRENCY'),
-            _(u'ANALYTIC ACCOUNT NAME'),
-            _(u'JOURNAL'),
-            _(u'MONTH'),
-            _(u'FISCAL YEAR'),
-            _(u'TAX CODE CODE'),
-            _(u'TAX CODE NAME'),
-            _(u'TAX AMOUNT'),
-            _(u'BANK STATEMENT'),
+            _('ENTRY NUMBER'),
+            _('ACCOUNT NAME'),
+            _('BALANCE'),
+            _('AMOUNT CURRENCY'),
+            _('CURRENCY'),
+            _('ANALYTIC ACCOUNT NAME'),
+            _('JOURNAL'),
+            _('MONTH'),
+            _('FISCAL YEAR'),
+            _('TAX CODE CODE'),
+            _('TAX CODE NAME'),
+            _('TAX AMOUNT'),
+            _('BANK STATEMENT'),
         ]
 
     def _get_rows_journal_entries(self, cr, uid, ids,

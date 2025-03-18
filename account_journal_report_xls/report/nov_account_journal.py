@@ -266,7 +266,7 @@ class nov_journal_print(report_sxw.rml_parse):
                     lines_grouped[key]['credit'] += line['credit']
                     lines_grouped[key]['tax_amount'] += line['tax_amount']
                     lines_grouped[key]['aml_name'] = _('Grouped Entries')
-            lines_out = lines_grouped.values()
+            lines_out = list(lines_grouped.values())
             lines_out.sort(key=lambda x: x['acc_code'])
             return lines_out
 
@@ -301,12 +301,12 @@ class nov_journal_print(report_sxw.rml_parse):
             "WHERE l.period_id in %s AND l.journal_id=%s "
             "AND l.tax_code_id IS NOT NULL AND am.state IN %s",
             (tuple(period_ids), journal_id, tuple(self.move_states)))
-        ids = map(lambda x: x[0], self.cr.fetchall())
+        ids = [x[0] for x in self.cr.fetchall()]
         if ids:
             self.cr.execute(
                 'SELECT id FROM account_tax_code WHERE id IN %s ORDER BY code',
                 (tuple(ids),))
-            tax_code_ids = map(lambda x: x[0], self.cr.fetchall())
+            tax_code_ids = [x[0] for x in self.cr.fetchall()]
         else:
             tax_code_ids = []
         tax_codes = self.pool.get('account.tax.code').browse(

@@ -258,7 +258,7 @@ class JournalXslx(abstract_report_xlsx.AbstractReportXslx):
         tax_columns = self._get_journal_tax_columns(report)
         self._set_columns_width(tax_columns)
 
-        for col_pos, column in tax_columns.iteritems():
+        for col_pos, column in tax_columns.items():
             self.sheet.write(
                 self.row_pos, col_pos, column['header'],
                 self.format_header_center

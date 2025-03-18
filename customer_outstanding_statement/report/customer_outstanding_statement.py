@@ -118,7 +118,7 @@ class CustomerOutstandingStatement(models.AbstractModel):
         """ % company_id
 
     def _get_account_display_lines(self, company_id, partner_ids, date_end):
-        res = dict(map(lambda x: (x, []), partner_ids))
+        res = dict([(x, []) for x in partner_ids])
         partners = ', '.join([str(i) for i in partner_ids])
         date_end = datetime.strptime(
             date_end, DEFAULT_SERVER_DATE_FORMAT).date()
@@ -325,7 +325,7 @@ class CustomerOutstandingStatement(models.AbstractModel):
         }
 
     def _get_account_show_buckets(self, company_id, partner_ids, date_end):
-        res = dict(map(lambda x: (x, []), partner_ids))
+        res = dict([(x, []) for x in partner_ids])
         partners = ', '.join([str(i) for i in partner_ids])
         date_end = datetime.strptime(
             date_end, DEFAULT_SERVER_DATE_FORMAT).date()

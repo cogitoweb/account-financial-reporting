@@ -107,7 +107,7 @@ class JournalReportWizard(models.TransientModel):
             'account_financial_report_qweb.action_report_journal_ledger')
         vals = action.read()[0]
         context1 = vals.get('context', {})
-        if isinstance(context1, basestring):
+        if isinstance(context1, str):
             context1 = safe_eval(context1)
         model = self.env['report_journal_qweb']
         report = model.create(self._prepare_report_journal())

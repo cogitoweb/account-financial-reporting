@@ -122,14 +122,14 @@ class account_print_journal_xls(orm.TransientModel):
                        (period_from.date_start,
                         period_to.date_stop,
                         company_id))
-            wiz_period_ids = map(lambda x: x[0], cr.fetchall())
+            wiz_period_ids = [x[0] for x in cr.fetchall()]
         wiz_journal_ids = [j.id for j in wiz_form.journal_ids]
 
         # sort journals
         cr.execute('SELECT id FROM account_journal '
                    'WHERE id IN %s ORDER BY type DESC',
                    (tuple(wiz_journal_ids),))
-        wiz_journal_ids = map(lambda x: x[0], cr.fetchall())
+        wiz_journal_ids = [x[0] for x in cr.fetchall()]
 
         datas = {
             'model': 'account.journal',

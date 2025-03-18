@@ -258,9 +258,9 @@ class account_journal_xls(report_xls):
         credit_pos = self.credit_pos
 
         # Column headers
-        c_specs = map(lambda x: self.render(
+        c_specs = [self.render(
             x, self.col_specs_lines_template, 'header',
-            render_space={'_': _p._}), wanted_list)
+            render_space={'_': _p._}) for x in wanted_list]
         row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(
             ws, row_pos, row_data, row_style=self.rh_cell_style,
@@ -277,9 +277,8 @@ class account_journal_xls(report_xls):
             credit_cell = rowcol_to_cell(row_pos, credit_pos)
             bal_formula = debit_cell + '-' + credit_cell
             _logger.debug('dummy call - %s', bal_formula)
-            c_specs = map(
-                lambda x: self.render(x, self.col_specs_lines_template,
-                                      'lines'), wanted_list)
+            c_specs = [self.render(x, self.col_specs_lines_template,
+                                      'lines') for x in wanted_list]
             row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
             row_pos = self.xls_write_row(
                 ws, row_pos, row_data, row_style=self.aml_cell_style)
@@ -298,8 +297,8 @@ class account_journal_xls(report_xls):
         debit_cell = rowcol_to_cell(row_pos, debit_pos)
         credit_cell = rowcol_to_cell(row_pos, credit_pos)
         bal_formula = debit_cell + '-' + credit_cell
-        c_specs = map(lambda x: self.render(
-            x, self.col_specs_lines_template, 'totals'), wanted_list)
+        c_specs = [self.render(
+            x, self.col_specs_lines_template, 'totals') for x in wanted_list]
         row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(
             ws, row_pos, row_data, row_style=self.rt_cell_style_right)
@@ -348,17 +347,15 @@ class account_journal_xls(report_xls):
                 col]['tax_totals'][0] = col_span
             index += 1
 
-        c_specs = map(lambda x: self.render(
-            x, self.col_specs_vat_summary_template, 'header'),
-            vat_summary_wanted_list)
+        c_specs = [self.render(
+            x, self.col_specs_vat_summary_template, 'header') for x in vat_summary_wanted_list]
         row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(
             ws, row_pos, row_data, row_style=self.rh_cell_style)
 
         for t in _p.tax_codes(o):
-            c_specs = map(lambda x: self.render(
-                x, self.col_specs_vat_summary_template, 'tax_totals'),
-                vat_summary_wanted_list)
+            c_specs = [self.render(
+                x, self.col_specs_vat_summary_template, 'tax_totals') for x in vat_summary_wanted_list]
             row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
             row_pos = self.xls_write_row(
                 ws, row_pos, row_data, row_style=self.aml_cell_style)

@@ -60,7 +60,7 @@ class TrialBalanceXslx(abstract_report_xlsx.AbstractReportXslx):
                         'type': 'amount_currency',
                         'width': 14},
                 }
-                res = dict(res.items() + foreign_currency.items())
+                res = dict(list(res.items()) + list(foreign_currency.items()))
             return res
         else:
             res = {
@@ -101,7 +101,7 @@ class TrialBalanceXslx(abstract_report_xlsx.AbstractReportXslx):
                         'type': 'amount_currency',
                         'width': 14},
                 }
-                res = dict(res.items() + foreign_currency.items())
+                res = dict(list(res.items()) + list(foreign_currency.items()))
             return res
 
     def _get_report_filters(self, report):
@@ -170,7 +170,7 @@ class TrialBalanceXslx(abstract_report_xlsx.AbstractReportXslx):
     def write_account_footer(self, account, name_value):
         """Specific function to write account footer for Trial Balance"""
         format_amt = self._get_currency_amt_header_format(account)
-        for col_pos, column in self.columns.iteritems():
+        for col_pos, column in self.columns.items():
             if column['field'] == 'name':
                 value = name_value
             else:

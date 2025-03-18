@@ -29,4 +29,4 @@ class TestAccountingReport(TransactionCase):
         # Check date_range onchange
         wiz.date_range_id = self.p1
         wiz._onchange_date_range_id()
-        self.assertEquals(wiz.date_from, time.strftime('%Y-01-01'))
+        self.assertEqual(wiz.date_from, time.strftime('%Y-01-01'))

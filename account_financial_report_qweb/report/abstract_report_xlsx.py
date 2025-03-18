@@ -130,7 +130,7 @@ class AbstractReportXslx(ReportXlsx):
         """Set width for all defined columns.
         Columns are defined with `_get_report_columns` method.
         """
-        for position, column in columns.iteritems():
+        for position, column in columns.items():
             self.sheet.set_column(position, position, column['width'])
 
     def _write_report_title(self, title):
@@ -192,7 +192,7 @@ class AbstractReportXslx(ReportXlsx):
         """Write array header on current line using all defined columns name.
         Columns are defined with `_get_report_columns` method.
         """
-        for col_pos, column in self.columns.iteritems():
+        for col_pos, column in self.columns.items():
             self.sheet.write(self.row_pos, col_pos, column['header'],
                              self.format_header_center)
         self.row_pos += 1
@@ -204,7 +204,7 @@ class AbstractReportXslx(ReportXlsx):
         self._write_line(self.columns, line_object)
 
     def _write_line(self, columns_descriptions, line_object):
-        for col_pos, column in columns_descriptions.iteritems():
+        for col_pos, column in columns_descriptions.items():
             value = getattr(line_object, column['field'])
             cell_type = column.get('type', 'string')
             if cell_type == 'string':
@@ -241,7 +241,7 @@ class AbstractReportXslx(ReportXlsx):
         """
         col_pos_label = self._get_col_pos_initial_balance_label()
         self.sheet.write(self.row_pos, col_pos_label, label, self.format_right)
-        for col_pos, column in self.columns.iteritems():
+        for col_pos, column in self.columns.items():
             if column.get('field_initial_balance'):
                 value = getattr(my_object, column['field_initial_balance'])
                 cell_type = column.get('type', 'string')
@@ -286,7 +286,7 @@ class AbstractReportXslx(ReportXlsx):
         )
         self.sheet.write(self.row_pos, col_pos_label, label,
                          self.format_header_right)
-        for col_pos, column in self.columns.iteritems():
+        for col_pos, column in self.columns.items():
             if column.get('field_final_balance'):
                 value = getattr(my_object, column['field_final_balance'])
                 cell_type = column.get('type', 'string')

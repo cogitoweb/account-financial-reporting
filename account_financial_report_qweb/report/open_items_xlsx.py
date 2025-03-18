@@ -54,7 +54,7 @@ class OpenItemsXslx(abstract_report_xlsx.AbstractReportXslx):
                      'type': 'amount_currency',
                      'width': 14},
             }
-            res = dict(res.items() + foreign_currency.items())
+            res = dict(list(res.items()) + list(foreign_currency.items()))
         return res
 
     def _get_report_filters(self, report):
