@@ -120,7 +120,7 @@ class AccountCSVExport(orm.TransientModel):
             writer.writerows(rows)
             file_value = file_data.getvalue()
             self.write(cr, uid, ids,
-                       {'data': base64.encodestring(file_value)},
+                       {'data': base64.encodebytes(file_value)},
                        context=context)
         finally:
             file_data.close()
@@ -180,7 +180,7 @@ class AccountCSVExport(orm.TransientModel):
             writer.writerows(rows)
             file_value = file_data.getvalue()
             self.write(cr, uid, ids,
-                       {'data': base64.encodestring(file_value)},
+                       {'data': base64.encodebytes(file_value)},
                        context=context)
         finally:
             file_data.close()
